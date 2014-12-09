@@ -31,23 +31,23 @@ possible way to buy all things on it.
 * Shoppinglist
     * Mars
     * Bread
-	  * Meat
-	  * 08154711007
+    * Meat
+    * 08154711007
 
 Shopping list logic
 ---------------------
 
 1. Always priorize: EAN, Name, Category
 2. If EAN:
-* Search in selected stores for the product and pick the
-cheapest one.
+    * Search in selected stores for the product and pick the
+  cheapest one.
 3. If Name:
-* Find stores that are selling products that have this name.
-* Pick the cheapest store.
+    * Find stores that are selling products that have this name.
+    * Pick the cheapest store.
 4. If Category:
-* Find all Products with this category
-* Search in all stores for all found products
-* Pick the cheapest one
+    * Find all Products with this category
+    * Search in all stores for all found products
+    * Pick the cheapest one
 
 Functional requirements
 ---------------------
