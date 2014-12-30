@@ -31,8 +31,17 @@ public class Store
 	 */
 	public double getPriceForItem(Item i)
 	{
-		return 0;
-		
+		double price = 0;
+		for (Preis p : this.items) {
+			if(p.item.equals(i)){
+				price = p.price;
+				break;
+			}
+			else{
+				throw new IllegalArgumentException();
+			}
+		}
+		return price;		
 	}
 	
 	/**
@@ -53,7 +62,13 @@ public class Store
 	 */
 	public int howManyAvailable(Item i)
 	{
-		return 0;
+		int numberOfItems = 0;
+		for (Preis p : this.items){
+			if(p.item.getKategorien().equals(i.getKategorien())){
+				numberOfItems++;
+			}
+		}
+		return numberOfItems;
 	}
 
 	/**

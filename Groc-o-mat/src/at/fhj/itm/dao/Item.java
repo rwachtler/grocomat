@@ -30,6 +30,10 @@ public class Item
 		this.kategorien.add(katname);
 	}
 	
+	public List<String> getKategorien() {
+		return kategorien;
+	}
+
 	public String toString()
 	{
 		return description + "[" + eanCode + "]";

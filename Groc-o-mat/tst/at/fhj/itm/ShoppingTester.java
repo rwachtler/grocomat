@@ -58,7 +58,7 @@ public class ShoppingTester
 		Store billa = new Store("Billa");
 		Store lidl = new Store("Lidl");
 		Store hofer = new Store("Hofer");
-		
+				
 		billa.addToStock(salami, 2.9);
 		billa.addToStock(extra, 1.8);
 		billa.addToStock(wbrot, 2.5);
