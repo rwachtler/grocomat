@@ -39,7 +39,7 @@ public class StoreDAO extends GenericSqlDAO<Store, String>{
 	 * @return cheapeast store for given item / category
 	 */
 	public Store getCheapest(Item itm, String catName, String[] storeAmount) {
-		Store storeTemp = new Store("nil");
+		Store storeTemp = new Store("unknown");
 		PreparedStatement stmt;
 
 		String sql = "";

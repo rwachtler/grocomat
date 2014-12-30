@@ -11,7 +11,7 @@ public class CategoryDAO extends GenericSqlDAO<String, Integer>{
 		// TODO Auto-generated method stub
 		PreparedStatement stmt;
 
-		// Check if Category is already in the DB
+		//Checking for the category in db
 		if (getCategoryIDbyName(newInstance) != -1) {
 			System.out.println("Category " + newInstance+" already existing in database!");
 		}
@@ -19,8 +19,7 @@ public class CategoryDAO extends GenericSqlDAO<String, Integer>{
 		else {
 			int catID = -1;
 			try {
-				stmt = conn
-						.prepareStatement("INSERT INTO CATEGORY (CATEGORY_NAME) VALUES (?)");
+				stmt = conn.prepareStatement("INSERT INTO CATEGORY (CAT_NAME) VALUES (?)");
 				stmt.setString(1, newInstance);
 				stmt.executeUpdate();
 				catID=getCategoryIDbyName(newInstance);

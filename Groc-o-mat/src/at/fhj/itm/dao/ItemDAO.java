@@ -125,7 +125,7 @@ public class ItemDAO extends GenericSqlDAO<Item, Integer>{
 	}
 
 	public Item getItemBySearchterm(String searchterm) {
-		Item itmTemp = new Item(-1, "nil");
+		Item itmTemp = new Item(-1, "unknown");
 
 		if (!getItemByCategory(searchterm).getDescription().equals("unknown")) {
 			itmTemp = getItemByCategory(searchterm);
@@ -145,7 +145,7 @@ public class ItemDAO extends GenericSqlDAO<Item, Integer>{
 	public Item getItemByCategory(String name) {
 		PreparedStatement stmt;
 
-		Item itmTemp = new Item(-1, "nil");
+		Item itmTemp = new Item(-1, "unknown");
 
 		try {
 			stmt = conn.prepareStatement("SELECT * FROM ITEM INNER JOIN PRICE ON ITEM.ITM_PK_EANCODE=PRICE.PRC_FK_ITEM_EANCODE "
@@ -173,7 +173,7 @@ public class ItemDAO extends GenericSqlDAO<Item, Integer>{
 	public Item getItemByName(String name) {
 		PreparedStatement stmt;
 
-		Item itmTemp = new Item(-1, "nil");
+		Item itmTemp = new Item(-1, "unknown");
 
 		try {
 			stmt = conn.prepareStatement("SELECT * FROM ITEM WHERE ITM_DESCRIPTION = ?");
