@@ -7,19 +7,32 @@ import at.fhj.itm.utils.DBConnector;
 
 public abstract class GenericSqlDAO <T, PK extends Serializable> {
 
-	Connection conn = DBConnector.getConnection();
-    /** Persist the newInstance object into database */
+	static Connection conn = DBConnector.getConnection();
+    
+	/**
+	 * Inserts a new Item into the database
+	 * @params newInstance - an instance to create
+	 * @return -1 if fail
+	 */
     public abstract PK create(T newInstance);
 
-    /** Retrieve an object that was previously persisted to the database using
-     *   the indicated id as primary key
-     */
+	/**
+	 * Reads an existing item from the database
+	 * @params ean - eancode as integer value
+	 * @return itm - a grocery 'Item'
+	 */
     public abstract T read(PK id);
 
-    /** Save changes made to a persistent object.  */
+    /**
+     * Updating an existing database object
+     * @param transientObject - object to update
+     */
     public abstract void update(T transientObject);
 
-    /** Remove an object from persistent storage in the database */
+    /**
+     * Removes an object from the database
+     * @param persistentObject - object to delete
+     */
     public abstract void delete(T persistentObject);
 }
 

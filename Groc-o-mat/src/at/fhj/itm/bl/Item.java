@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 /**
- * This class represents an Item. For example a book.
- * @author Hutter G.
+ * This class represents a grocery item. 
+ * @author R.Wachtler.
  */
 public class Item
 {
+	
 	// Each Item has an barcode.
 	private int eanCode = -1;
 	
@@ -33,9 +35,27 @@ public class Item
 	public List<String> getKategorien() {
 		return kategorien;
 	}
-
+	
+	public int getEanCode() {
+		return eanCode;
+	}
+	
+	public void setEanCode(int code){
+		this.eanCode = code;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String desc){
+		this.description = desc;
+	}
+	
 	public String toString()
 	{
 		return description + "[" + eanCode + "]";
 	}
+
+	
 }

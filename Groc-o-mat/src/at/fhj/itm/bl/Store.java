@@ -1,7 +1,11 @@
 package at.fhj.itm.bl;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
+
+
 
 
 /**
@@ -12,7 +16,7 @@ public class Store
 {
 	String name = "";
 	List<Preis> items = new ArrayList<Preis>();
-	
+
 	/**
 	 * ctor
 	 * @param name
@@ -84,7 +88,7 @@ public class Store
 	public void save()
 	{
 		// Implement me !
+		
+		
 	}
-
-	
 }

@@ -16,7 +16,7 @@ public class DBTests {
 	{
 		Connection c = DBConnector.getConnection();
 		Statement s = c.createStatement();
-		s.execute("SELECT * FROM ITEMS");
+		s.execute("SELECT * FROM ITEM");
 		//Test is marked as SUCCESSFUL when no exception is thrown
 	}
 
