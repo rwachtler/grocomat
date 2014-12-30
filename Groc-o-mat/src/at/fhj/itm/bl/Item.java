@@ -1,4 +1,4 @@
-package at.fhj.itm.dao;
+package at.fhj.itm.bl;
 
 import java.util.ArrayList;
 import java.util.List;

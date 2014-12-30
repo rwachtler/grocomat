@@ -4,9 +4,9 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import at.fhj.itm.bl.Item;
 import at.fhj.itm.bl.ShoppingList;
-import at.fhj.itm.dao.Item;
-import at.fhj.itm.dao.Store;
+import at.fhj.itm.bl.Store;
 
 /**
  * Unittestclass - This should show how the Classes will be used. 

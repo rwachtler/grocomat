@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import at.fhj.itm.dao.Item;
-import at.fhj.itm.dao.Store;
-
 /**
  * This class represents a plain shopping list
  * @author Hutter G.

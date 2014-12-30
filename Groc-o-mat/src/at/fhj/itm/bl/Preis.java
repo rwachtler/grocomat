@@ -1,4 +1,4 @@
-package at.fhj.itm.dao;
+package at.fhj.itm.bl;
 
 /**
  * Simple class that assigns an item a price.
