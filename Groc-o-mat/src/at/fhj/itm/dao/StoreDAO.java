@@ -1,36 +1,90 @@
 package at.fhj.itm.dao;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import at.fhj.itm.bl.Item;
+import at.fhj.itm.bl.Preis;
 import at.fhj.itm.bl.Store;
-public class StoreDAO extends GenericSqlDAO<Store, String>{
+
+public class StoreDAO extends GenericSqlDAO<Store, String> {
 
 	@Override
 	public String create(Store newInstance) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement stmt;
+
+		// Check if Store is already in the DB
+		if (!(read(newInstance.getName()).getName().equals("unknown"))) {
+			System.out.println("INFO: StoreDAO - CREATE - Store" + newInstance.getName()+ " item already exists in the database!");
+		}
+
+		else {
+
+			try {
+				stmt = conn.prepareStatement("INSERT INTO STORE (STR_PK_NAME) VALUES (?)");
+				stmt.setString(1, newInstance.getName());
+				stmt.executeUpdate();
+				System.out.println("INFO: StoreDAO - CREATE - Store " + newInstance.getName()+ " creation successful!");
+
+				for (Preis p : newInstance.getItems()) {
+					stmt = conn.prepareStatement("INSERT INTO STORE_PRICE (STRPRC_FK_STORE_NAME, STRPRC_FK_PRICE_ID) VALUES (?, ?)");
+					stmt.setString(1, newInstance.getName());
+					stmt.setLong(2, PreisDAO.getPreisID(p));
+					stmt.executeUpdate();
+				}
+
+			} catch (SQLException e) {
+				System.err.println("ERROR: StoreDAO - CREATE - Store "+ newInstance.getName() + " creation failed!");
+			}
+
+			return newInstance.getName();
+		}
+		return "-1";
 	}
 
 	@Override
-	public Store read(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Store read(String name) {
+		PreparedStatement stmt;
+		Store s = new Store("unknown");
+
+		try {
+			stmt = conn.prepareStatement("SELECT * FROM STORE WHERE STR_PK_NAME = ?");
+			stmt.setString(1, name);
+			
+			ResultSet rs = stmt.executeQuery();
+			rs.first();
+
+			s.setName(rs.getString("STR_PK_NAME"));
+
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			System.err.println("ERROR: StoreDAO - READ - Store: '" + name+ "' access failed!");
+		}
+
+		return s;
 	}
 
 	@Override
-	public void update(Store transientObject) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void update(Store transientObject) {}
 
 	@Override
 	public void delete(Store persistentObject) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement stmt;
+		try {
+			stmt = conn.prepareStatement("DELETE FROM STORE WHERE STR_PK_NAME = ?");
+			stmt.setString(1, persistentObject.getName());
+			int affectedRows = stmt.executeUpdate();
+
+			if (affectedRows != 1) {
+				System.out.println("INFO: StoreDAO - Store not found "+ persistentObject);
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			System.err.println("INFO: StoreDAO - DELETE - delete failed!");
+		}
 	}
-	
+
 	/**
 	 * Gets cheapest store for given parameters
 	 * @param itm - Item to search
@@ -44,9 +98,9 @@ public class StoreDAO extends GenericSqlDAO<Store, String>{
 
 		String sql = "";
 		for (int i = 0; i < storeAmount.length - 1; i++) {
-			sql += "STR_PRICE_FK_STORE_NAME = '" + storeAmount[i] + "' OR ";
+			sql += "STRPRC_FK_STORE_NAME = '" + storeAmount[i] + "' OR ";
 		}
-		sql += "STR_PRICE_FK_STORE_NAME = '" + storeAmount[storeAmount.length - 1] + "'";
+		sql += "STRPRC_FK_STORE_NAME = '" + storeAmount[storeAmount.length - 1] + "'";
 
 		try {
 			sql = "SELECT * FROM ITEM INNER JOIN PRICE ON ITEM.ITM_PK_EANCODE=PRICE.PRC_FK_ITEM_EANCODE "+ "INNER JOIN STORE_PRICE ON STORE_PRICE.STRPRC_FK_PRICE_ID=PRICE.PRC_PK_ID "
@@ -65,7 +119,7 @@ public class StoreDAO extends GenericSqlDAO<Store, String>{
 			storeTemp.setName(rs.getString("STRPRC_FK_STORE_NAME"));
 
 		} catch (SQLException e) {
-			System.err.println("ERROR: StoreDAO - getCheapest - Store not found");
+			System.err.println("ERROR: StoreDAO - getCheapest() - Store not found");
 		}
 
 		return storeTemp;
@@ -93,7 +147,7 @@ public class StoreDAO extends GenericSqlDAO<Store, String>{
 			ResultSet rs = stmt.executeQuery();
 			rs.first();
 
-			priceTemp = Double.parseDouble(rs.getString("PRICE_PRICE"));
+			priceTemp = Double.parseDouble(rs.getString("PRC_PRICE"));
 
 		} catch (SQLException e) {
 			System.err.println("ERROR: StoreDAO - getPriceFromNameAndItem - No price found '"+ itm.getDescription() + "'");

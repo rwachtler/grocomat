@@ -40,17 +40,9 @@ public class Store
 	 */
 	public double getPriceForItem(Item i)
 	{
-		double price = 0;
-		for (Preis p : this.items) {
-			if(p.item.equals(i)){
-				price = p.price;
-				break;
-			}
-			else{
-				throw new IllegalArgumentException();
-			}
-		}
-		return price;		
+		double price = 0.0;
+		price = strDAO.getPriceForStorenameAndItem(name, i);
+		return price;			
 	}
 	
 	/**
@@ -69,16 +61,7 @@ public class Store
 	 * @param i
 	 * @return
 	 */
-	public int howManyAvailable(Item i)
-	{
-		int numberOfItems = 0;
-		for (Preis p : this.items){
-			if(p.item.getKategorien().equals(i.getKategorien())){
-				numberOfItems++;
-			}
-		}
-		return numberOfItems;
-	}
+	public int howManyAvailable(Item i){/*NOT IMPLEMENTED*/return 0;}
 
 	/**
 	 * This is a lifecycle function. It presists the shop (as 

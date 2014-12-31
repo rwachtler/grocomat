@@ -23,9 +23,9 @@ public class CategoryDAO extends GenericSqlDAO<String, Integer>{
 				stmt.setString(1, newInstance);
 				stmt.executeUpdate();
 				catID=getCategoryIDbyName(newInstance);
-				System.out.println("INFO: - Category has been created!");
+				System.out.println("INFO: - "+newInstance.toString()+" has been created!");
 			} catch (SQLException e) {
-				System.err.println("ERROR: - CategoryDAO - CREATE Category: "+ newInstance + " creation failed!");
+				System.err.println("ERROR: - CategoryDAO - CREATE Category: "+ newInstance.toString() + " creation failed!");
 			}
 
 			return catID;
@@ -49,7 +49,7 @@ public class CategoryDAO extends GenericSqlDAO<String, Integer>{
 			res = rs.getString("CAT_NAME");
 
 		} catch (SQLException e) {
-			System.err.println("ERROR in CategoryDAO - READ - Category with ID: " + id+ " reading operation failed!");
+			System.err.println("ERROR: CategoryDAO - READ - Category with ID: " + id + " reading operation failed!");
 		}
 
 		return res;
@@ -68,10 +68,10 @@ public class CategoryDAO extends GenericSqlDAO<String, Integer>{
 			int affectedRows = stmt.executeUpdate();
 
 			if (affectedRows != 1) {
-				System.out.println("Category not found: "+ persistentObject);
+				System.out.println("INFO: Following category not found: "+ persistentObject);
 			}
 		} catch (SQLException e) {
-			System.err.println("ERROR in CategoryDAO - DELETE - operation failed!");
+			System.err.println("ERROR: CategoryDAO - DELETE - operation failed!");
 		}
 	}
 	
@@ -91,7 +91,7 @@ public class CategoryDAO extends GenericSqlDAO<String, Integer>{
 			
 			return rs.getInt("CAT_PK_ID");
 		} catch (SQLException e) {
-			System.err.println("ERROR in CategoryDAO - getCategoryId - Category not found!");
+			System.err.println("ERROR: CategoryDAO - getCategoryId() - Category not found!");
 		}
 		return -1;
 	}

@@ -1,45 +1,41 @@
--- ************************************************************************************************
--- Cleaning up
--- ************************************************************************************************
+-- Clean database
 DROP ALL OBJECTS; 
 
 
--- ************************************************************************************************
--- Creating tables and relationships
--- ************************************************************************************************
+-- Creating tables
 
--- Which Items are available
+-- Items
 CREATE TABLE ITEM(
 	ITM_PK_EANCODE INT PRIMARY KEY, 
 	ITM_DESCRIPTION VARCHAR(255) NOT NULL
 );
 
--- Which Item has which Category
+-- Item Categories
 CREATE TABLE ITEM_CATEGORY(
 	ITMCAT_FK_ITEM_EANCODE INT NOT NULL,
 	ITMCAT_FK_CATEGORY_ID BIGINT NOT NULL,
 	FOREIGN KEY(ITMCAT_FK_ITEM_EANCODE) REFERENCES ITEM(ITM_PK_EANCODE)
 );
 	
--- How are the Categories called
+-- Categories
 CREATE TABLE CATEGORY(
 	CAT_PK_ID BIGINT AUTO_INCREMENT PRIMARY KEY,
 	CAT_NAME VARCHAR(255) NOT NULL
 );
 	
--- Which Item has which Price
+-- Prices
 CREATE TABLE PRICE(
 	PRC_PK_ID BIGINT PRIMARY KEY AUTO_INCREMENT,
 	PRC_PRICE DOUBLE NOT NULL,
 	PRC_FK_ITEM_EANCODE INT NOT NULL
 );
 
--- Which Stores are available
+-- Stores
 CREATE TABLE STORE(
 	STR_PK_NAME VARCHAR(255) PRIMARY KEY
 );
 	
--- Which Store has which Price ==> Items available
+-- Stores & Prices
 CREATE TABLE STORE_PRICE(
 	STRPRC_PK_ID BIGINT PRIMARY KEY AUTO_INCREMENT,
 	STRPRC_FK_STORE_NAME VARCHAR(255) NOT NULL,
@@ -47,25 +43,3 @@ CREATE TABLE STORE_PRICE(
 	FOREIGN KEY(STRPRC_FK_STORE_NAME) REFERENCES STORE(STR_PK_NAME),
 	FOREIGN KEY(STRPRC_FK_PRICE_ID) REFERENCES PRICE(PRC_PK_ID)
 );
-
--- View to see all Items in the Store with the Price and all their Information
-CREATE VIEW ALL_ITEM_STORE_PRICE AS 
-	SELECT * 
-	FROM ITEM INNER JOIN PRICE ON ITEM.ITM_PK_EANCODE=PRICE.PRC_FK_ITEM_EANCODE 
-	INNER JOIN STORE_PRICE ON STORE_PRICE.STRPRC_FK_PRICE_ID=PRICE.PRC_PK_ID;
-
--- View to see all Items in the Store with the Price
-CREATE VIEW ITEM_STORE_PRICE_NAMED AS 
-	SELECT STRPRC_FK_STORE_NAME AS "Store", ITM_PK_EANCODE AS "EANCODE", ITM_DESCRIPTION AS "Description", PRC_PRICE as "Price" 
-	FROM ALL_ITEM_STORE_PRICE;
-	
-CREATE VIEW ALL_INFORMATIONS AS
-	SELECT * FROM ITEM INNER JOIN PRICE ON ITEM.ITM_PK_EANCODE=PRICE.PRC_FK_ITEM_EANCODE 
-	INNER JOIN STORE_PRICE ON STORE_PRICE.STRPRC_FK_PRICE_ID=PRICE.PRC_PK_ID
-	LEFT JOIN ITEM_CATEGORY ON ITEM.ITM_PK_EANCODE=ITEM_CATEGORY.ITMCAT_FK_ITEM_EANCODE
-	LEFT JOIN CATEGORY ON ITEM_CATEGORY.ITMCAT_FK_CATEGORY_ID=CATEGORY.CAT_PK_ID
-	ORDER BY ITM_PK_EANCODE,PRC_PRICE ASC;
-
-
-
-

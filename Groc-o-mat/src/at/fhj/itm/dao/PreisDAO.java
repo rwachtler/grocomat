@@ -15,7 +15,7 @@ public class PreisDAO extends GenericSqlDAO<Preis, Integer>{
 
 		// Check if Price is already in the DB
 		if (getPreisID(newInstance) != -1) {
-			System.out.println("INFO: This price object " + newInstance.getId()+ " already exists in the database!");
+			System.out.println("INFO: PreisDAO - This preis object " + newInstance.getId()+ " already exists in the database!");
 		}
 
 		else {
@@ -25,9 +25,9 @@ public class PreisDAO extends GenericSqlDAO<Preis, Integer>{
 				stmt.setLong(1, newInstance.getEan());
 				stmt.setDouble(2, newInstance.getPrice());
 				stmt.executeUpdate();
-				System.out.println("INFO: Price with ID: "+ getPreisID(newInstance) + ", creation successful!");
+				System.out.println("INFO: Preis with ID: "+ getPreisID(newInstance) + ", creation successful!");
 			} catch (SQLException e) {
-				System.err.println("ERROR: - PriceDAO - CREATE: Creation failed!");
+				System.err.println("ERROR: PreisDAO - CREATE - Creation failed!");
 			}
 
 			return newInstance.getId();
@@ -53,7 +53,7 @@ public class PreisDAO extends GenericSqlDAO<Preis, Integer>{
 			p.setPrice(Double.parseDouble(rs.getString("PRC_PRICE")));
 
 		} catch (SQLException e) {
-			System.err.println("ERROR: - PriceDAO - READ: Price with ID: " + id+ " reading failed!");
+			System.err.println("ERROR: PreisDAO - READ - Preis with ID(): " + id+ " reading failed!");
 		}
 
 		return p;
@@ -70,10 +70,10 @@ public class PreisDAO extends GenericSqlDAO<Preis, Integer>{
 			int affectedRows = stmt.executeUpdate();
 
 			if (affectedRows != 1) {
-				System.out.println("INFO: price object not found "+ transientObject);
+				System.out.println("INFO: PreisDAO - UPDATE - preis object not found "+ transientObject);
 			}
 		} catch (SQLException e) {
-			System.err.println("ERROR: - PriceDAO - UPDATE: Update failed!");
+			System.err.println("ERROR: PreisDAO - UPDATE - Update failed!");
 		}
 	}
 
@@ -87,10 +87,10 @@ public class PreisDAO extends GenericSqlDAO<Preis, Integer>{
 			int affectedRows = stmt.executeUpdate();
 
 			if (affectedRows != 1) {
-				System.out.println("INFO: Price not found "+ persistentObject);
+				System.out.println("INFO: PreisDAO - DELETE - Preis not found "+ persistentObject);
 			}
 		} catch (SQLException e) {
-			System.err.println("ERROR: - PriceDAO - DELETE: Delete failed!");
+			System.err.println("ERROR: PreisDAO - DELETE - Delete failed!");
 		}
 	}
 	
@@ -111,7 +111,7 @@ public class PreisDAO extends GenericSqlDAO<Preis, Integer>{
 			
 			return rs.getInt("PRC_PK_ID");
 		} catch (SQLException e) {
-			System.err.println("ERROR: - PriceDAO - getPreisId: Price not found!");
+			System.err.println("ERROR: PreisDAO - getPreisId(): Price not found!");
 		}
 		return -1;
 	}
